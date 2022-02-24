@@ -1,12 +1,18 @@
 package com.example.flixster
 
+import android.content.ContentValues.TAG
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 
 private const val URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"
+
+private const val TAG = "MainActivity"
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,11 +27,12 @@ class MainActivity : AppCompatActivity() {
                 response: String?,
                 throwable: Throwable?
             ) {
-                TODO("Not yet implemented")
+                Log.e(TAG, "onFailure $statusCode")
             }
 
-            override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
-                TODO("Not yet implemented")
+            override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON) {
+                Log.i(TAG, "onSuccess: JSON data $json")
+                val movieJsonArray = json.jsonObject.getJSONArray("results")
             }
 
         })
